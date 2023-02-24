@@ -1,8 +1,13 @@
 import numpy as np
 import pandas as pd
+import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from Function import *
+from sklearn.metrics import accuracy_score, log_loss
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.tree import DecisionTreeClassifier
+from sklearn import preprocessing
 
 # Uploading data and creatin targets
 train = pd.read_csv('train.csv')
@@ -12,11 +17,35 @@ test = pd.read_csv('test.csv')
 print(train.info,train.isnull().sum())
 
 # Filling empty cells
-fillempty(train)
+train = fillempty(train)
+
+# Analisi training data
+data_analisis(train)
 
 # Creating targets
 train_features = train.pop('Survived')
 
+# Droping unnecessary columns
+train.drop(['Name', 'Ticket', 'PassengerId','Age Range'], axis=1, inplace=True)
+
+# Encoding data
+encode_data(train)
+
+# Spliting data
+train_x,val_x,train_y,val_y = train_test_split(train,train_features,test_size=.3,random_state=42)
+
+# Training model
+
+model = KNeighborsClassifier(3)
+
+model.fit(train_x,train_y)
+print(model.score(val_x,val_y))
+
+
+model = DecisionTreeClassifier(random_state=11)
+
+model.fit(train_x,train_y)
+print(model.score(val_x,val_y))
 
 
 
@@ -61,26 +90,3 @@ train_features = train.pop('Survived')
 
 
 
-
-
-
-
-
-
-
-# male_survived = len(train[(train['Sex'] == 'male') & (train['Survived'] == 1)])
-# male_dead = len(train[(train['Sex'] == 'male') & (train['Survived'] == 0)])
-#
-# female_survived = len(train[(train['Sex'] == 'female') & (train['Survived'] == 1)])
-# female_dead = len(train[(train['Sex'] == 'female') & (train['Survived'] == 0)])
-#
-# fig = plt.figure()
-# plt.subplot(1,2,1)
-# plt.pie([male_survived,male_dead],labels=['Survived','Dead'],autopct='%1.1f%%')
-# plt.legend(bbox_to_anchor=(0.25,-0.25),loc="lower left")
-# plt.title("Male")
-# plt.subplot(1,2,2)
-# plt.pie([female_survived,female_dead],labels=['Survived','Dead'],autopct='%1.1f%%')
-# plt.title("Female")
-# fig.suptitle('Survival by gender',fontsize=25)
-# plt.show()
