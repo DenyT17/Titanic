@@ -45,17 +45,18 @@ def fillempty(data):
 ```
 
 Now I can check the dependence of survival on individual characteristics of passengers. For this cas I create ***data_analisis*** function. This function return few typical chart of dependence of survival and indyvidual characteristics like :
+
 *Passenger age
 
 ![Survival by age](https://user-images.githubusercontent.com/122997699/221367281-8b4a8d4a-b8d4-4233-ba37-44e80342254a.png)
 
 * Passenger sex
 
-![Survival by age passenger class](https://user-images.githubusercontent.com/122997699/221367287-f3679705-8c1d-4d8f-97ef-3fd62ed596e6.png)
+![Survival by gender](https://user-images.githubusercontent.com/122997699/221367296-aebfea51-4147-420c-a6ab-29c6c0e48961.png)
 
 * Passenger class
 
-![Survival by gender](https://user-images.githubusercontent.com/122997699/221367296-aebfea51-4147-420c-a6ab-29c6c0e48961.png)
+![Survival by age passenger class](https://user-images.githubusercontent.com/122997699/221367287-f3679705-8c1d-4d8f-97ef-3fd62ed596e6.png)
 
 Now I can create targets using the pop function. 
 
