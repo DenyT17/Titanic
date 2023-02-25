@@ -3,6 +3,7 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn import preprocessing
+from sklearn.model_selection import cross_val_score
 
 def fillempty(data):
     data['Age'].fillna(data['Age'].mean(), inplace=True)
@@ -70,3 +71,13 @@ def data_analisis(data):
     plt.title('Survival by age',fontsize=25)
     plt.tight_layout()
     plt.show()
+
+
+def training_models(models,x_train,y_train,val_x,val_y):
+    for model in models:
+        model.fit(x_train,y_train)
+        classifier_name = model.__class__.__name__
+        print("{} model training accuracy: {}".format(classifier_name,model.score(val_x,val_y)))
+
+def cross_validation(model):
+    score = cross_val_score(model,)

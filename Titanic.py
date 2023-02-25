@@ -7,6 +7,9 @@ from Function import *
 from sklearn.metrics import accuracy_score, log_loss
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier, GradientBoostingClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import cross_val_score
 from sklearn import preprocessing
 
 # Uploading data and creatin targets
@@ -32,20 +35,20 @@ train.drop(['Name', 'Ticket', 'PassengerId','Age Range'], axis=1, inplace=True)
 encode_data(train)
 
 # Spliting data
-train_x,val_x,train_y,val_y = train_test_split(train,train_features,test_size=.3,random_state=42)
+train_x,val_x,train_y,val_y = train_test_split(train,train_features,test_size=.33,random_state=42)
 
-# Training model
+# Training models
+models = [
+        KNeighborsClassifier(3),
+        DecisionTreeClassifier(random_state=11),
+        RandomForestClassifier(),
+        AdaBoostClassifier(),
+        GradientBoostingClassifier(),
+        LogisticRegression(max_iter=200)
+]
 
-model = KNeighborsClassifier(3)
+training_models(models,train_x,train_y,val_x,val_y)
 
-model.fit(train_x,train_y)
-print(model.score(val_x,val_y))
-
-
-model = DecisionTreeClassifier(random_state=11)
-
-model.fit(train_x,train_y)
-print(model.score(val_x,val_y))
 
 
 
