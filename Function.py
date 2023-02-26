@@ -4,7 +4,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn import preprocessing
 from sklearn.model_selection import cross_val_score
-
+from sklearn.metrics import accuracy_score
 def fillempty(data):
     data['Age'].fillna(data['Age'].mean(), inplace=True)
     data['Cabin'].fillna('Empty', inplace=True)
@@ -74,10 +74,22 @@ def data_analisis(data):
 
 
 def training_models(models,x_train,y_train,val_x,val_y):
+    print('\n\n Training models ')
     for model in models:
         model.fit(x_train,y_train)
-        classifier_name = model.__class__.__name__
-        print("{} model training accuracy: {}".format(classifier_name,model.score(val_x,val_y)))
+        model_name = model.__class__.__name__
+        print("{} model training accuracy: {}".format(model_name,model.score(val_x,val_y)))
 
-def cross_validation(model):
-    score = cross_val_score(model,)
+def cross_validation(model,x_data,y_data,cv):
+    scores = cross_val_score(model,x_data,y_data,cv=cv)
+    model_name = model.__class__.__name__
+    for iter_count, accuracy in enumerate(scores):
+        print('Validation {0} Accuracy {1}'.format(iter_count, accuracy))
+    print(' Average Accuracy for {} :{} '.format(model_name, np.mean(scores)))
+    return np.mean(scores)
+def prediction(model,test_input,test_output):
+    test = encode_data(test_input)
+    model_name = model.__class__.__name__
+    prediction = model.predict(test_input)
+    print('{} model test accuracy : {}'.format(model_name,accuracy_score(test_output, prediction)))
+    return accuracy_score(test_output, prediction)
