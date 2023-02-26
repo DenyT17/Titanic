@@ -163,7 +163,8 @@ Now I can choose this classifiers:
 * LinearDiscriminantAnalysis
 * LogisticRegression
 * GradientBoostingClassifie
-In next step I Will try increase accuracy of this classifiers by using GridSearch CV. 
+
+##### In next step I Will try increase accuracy of this classifiers by using GridSearch CV. 
 
 ## Next goals 🏆⌛
 * Increasing prediction accuracy as much as possible
