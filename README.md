@@ -84,7 +84,89 @@ First I split data from train and validation. Validation data will be 30% of all
 ```python
 train_x,val_x,train_y,val_y = train_test_split(train,train_features,test_size=.30,random_state=42)
 ```
+
+First I must to choose best classifier. For this reason i put in to the list 7 typical classifier, and create ***training model*** function, thanks a witch I can train model with each classifier.
+```python
+models = [
+        KNeighborsClassifier(3),
+        DecisionTreeClassifier(random_state=11),
+        RandomForestClassifier(),
+        AdaBoostClassifier(),
+        GradientBoostingClassifier(),
+        LogisticRegression(max_iter=500),
+        LinearDiscriminantAnalysis()
+]
+```
+```python
+def training_models(models,x_train,y_train,val_x,val_y):
+    print('\n\n Training models ')
+    for model in models:
+        model.fit(x_train,y_train)
+        model_name = model.__class__.__name__
+        print("{} model training accuracy: {}".format(model_name,model.score(val_x,val_y)))
+```
+![image](https://user-images.githubusercontent.com/122997699/221405966-b867b7ef-fe05-425d-af69-cded88f1413a.png)
+
+In this case, best training accuracy have:
+* LogisticRegression
+* GradientBoostingClassifier
+* AdaBoostClassifier
+* LinearDiscriminantAnalysis
+
+Now, I evaluate my classifiers using cross-validation. For this task I create ***cross_validation*** function. 
+```python
+def cross_validation(model,x_data,y_data,cv):
+    scores = cross_val_score(model,x_data,y_data,cv=cv)
+    model_name = model.__class__.__name__
+    for iter_count, accuracy in enumerate(scores):
+        print('Validation {0} Accuracy {1}'.format(iter_count, accuracy))
+    print(' Average Accuracy for {} :{} '.format(model_name, np.mean(scores)))
+    return np.mean(scores)
+```
+I use this function to each classifier, thanks to witch I can specify Average Accuracy and show it in graph. 
+```python
+Average_Accuracy=[]
+Models_name=[]
+for model in models:
+        Models_name.append(model.__class__.__name__)
+        Average_Accuracy.append(cross_validation(model,train,train_features,5))
+
+fig = plt.figure(figsize=(10,10))
+ax = sns.barplot(x=Models_name,y=Average_Accuracy)
+ax.bar_label(ax.containers[0])
+plt.title('Cross-validation average accuracy',fontsize=25)
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
+```
+![Cross Validation](https://user-images.githubusercontent.com/122997699/221407401-30a8a59d-bde2-4ebb-9fdb-b8cd15983efa.png)
+
+In this case, best  cross-validation average accuracy have:
+* RandomForestClassifier
+* GradientBoostingClassifier
+* AdaBoostClassifier
+* LinearDiscriminantAnalysis
+
+Now I can use the _test.csv and _gender submission.csv files to check the prediction accuracy of each model. 
+I create ***prediction*** function and show result in barplot. 
+```python
+def prediction(model,test_input,test_output):
+    test = encode_data(test_input)
+    model_name = model.__class__.__name__
+    prediction = model.predict(test_input)
+    print('{} model test accuracy : {}'.format(model_name,accuracy_score(test_output, prediction)))
+    return accuracy_score(test_output, prediction)
+```
+![Prediction Accuracy](https://user-images.githubusercontent.com/122997699/221407931-66962dd3-67f2-4aed-8c0c-162ad0152e89.png)
+
+Now I can choose this classifiers:
+* LinearDiscriminantAnalysis
+* LogisticRegression
+* GradientBoostingClassifie
+In next step I Will try increase accuracy of this classifiers by using GridSearch CV. 
+
 ## Next goals 🏆⌛
 * Increasing prediction accuracy as much as possible
 * Trying other prediction models 
 * Creating graphic user interface
+* Increase accuracy of this classifiers by using GridSearch CV
