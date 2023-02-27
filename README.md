@@ -159,12 +159,11 @@ def prediction(model,test_input,test_output):
 ```
 ![Prediction Accuracy](https://user-images.githubusercontent.com/122997699/221407931-66962dd3-67f2-4aed-8c0c-162ad0152e89.png)
 
-Now I can choose this classifiers:
-* LinearDiscriminantAnalysis
+Now I can choose this classifier:
 * LogisticRegression
-* GradientBoostingClassifie
 
-##### In next step I Will try increase accuracy of this classifiers by using GridSearch CV. 
+
+##### In next step I Will try increase accuracy of this classifier by using GridSearch CV. 
 
 ## Next goals 🏆⌛
 * Increasing prediction accuracy as much as possible
