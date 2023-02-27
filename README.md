@@ -169,4 +169,5 @@ Now I can choose this classifier:
 * Increasing prediction accuracy as much as possible
 * Trying other prediction models 
 * Creating graphic user interface
+* Feature Rescaling
 * Increase accuracy of this classifiers by using GridSearch CV
