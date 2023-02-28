@@ -148,7 +148,7 @@ In this case, best  cross-validation average accuracy have:
 * LinearDiscriminantAnalysis
 
 
-##### In next step I Will try increase accuracy of this classifier by using GridSearch CV. 
+##### In next step I Will try to predict survival passenger by  from test.csv file, and passenger defined by user.
 
 ## Next goals 🏆⌛
 * Increasing prediction accuracy as much as possible
