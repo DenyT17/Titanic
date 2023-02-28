@@ -147,21 +147,6 @@ In this case, best  cross-validation average accuracy have:
 * AdaBoostClassifier
 * LinearDiscriminantAnalysis
 
-Now I can use the _test.csv and _gender submission.csv files to check the prediction accuracy of each model. 
-I create ***prediction*** function and show result in barplot. 
-```python
-def prediction(model,test_input,test_output):
-    test = encode_data(test_input)
-    model_name = model.__class__.__name__
-    prediction = model.predict(test_input)
-    print('{} model test accuracy : {}'.format(model_name,accuracy_score(test_output, prediction)))
-    return accuracy_score(test_output, prediction)
-```
-![Prediction Accuracy](https://user-images.githubusercontent.com/122997699/221407931-66962dd3-67f2-4aed-8c0c-162ad0152e89.png)
-
-Now I can choose this classifier:
-* LogisticRegression
-
 
 ##### In next step I Will try increase accuracy of this classifier by using GridSearch CV. 
 
