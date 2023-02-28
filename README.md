@@ -98,12 +98,14 @@ models = [
 ]
 ```
 ```python
-def training_models(models,x_train,y_train,val_x,val_y):
-    print('\n\n Training models ')
-    for model in models:
-        model.fit(x_train,y_train)
-        model_name = model.__class__.__name__
-        print("{} model training accuracy: {}".format(model_name,model.score(val_x,val_y)))
+def training_models(model,x_train,y_train,val_x,val_y):
+    model.fit(x_train,y_train)
+    model_name = model.__class__.__name__
+    print("{} model training accuracy: {}".format(model_name,model.score(val_x,val_y)))
+```
+```python
+for model in models:
+        training_models(model,train_x,train_y,val_x,val_y)
 ```
 ![image](https://user-images.githubusercontent.com/122997699/221405966-b867b7ef-fe05-425d-af69-cded88f1413a.png)
 
@@ -149,6 +151,10 @@ In this case, best  cross-validation average accuracy have:
 
 
 ##### In next step I Will try to predict survival passenger by  from test.csv file, and passenger defined by user.
+To this case i choose:
+* LinearDiscriminantAnalysis
+* GradientBoostingClassifier
+* LogisticRegression
 
 ## Next goals 🏆⌛
 * Increasing prediction accuracy as much as possible
