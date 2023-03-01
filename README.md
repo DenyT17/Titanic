@@ -98,12 +98,14 @@ models = [
 ]
 ```
 ```python
-def training_models(models,x_train,y_train,val_x,val_y):
-    print('\n\n Training models ')
-    for model in models:
-        model.fit(x_train,y_train)
-        model_name = model.__class__.__name__
-        print("{} model training accuracy: {}".format(model_name,model.score(val_x,val_y)))
+def training_models(model,x_train,y_train,val_x,val_y):
+    model.fit(x_train,y_train)
+    model_name = model.__class__.__name__
+    print("{} model training accuracy: {}".format(model_name,model.score(val_x,val_y)))
+```
+```python
+for model in models:
+        training_models(model,train_x,train_y,val_x,val_y)
 ```
 ![image](https://user-images.githubusercontent.com/122997699/221405966-b867b7ef-fe05-425d-af69-cded88f1413a.png)
 
@@ -147,27 +149,16 @@ In this case, best  cross-validation average accuracy have:
 * AdaBoostClassifier
 * LinearDiscriminantAnalysis
 
-Now I can use the _test.csv and _gender submission.csv files to check the prediction accuracy of each model. 
-I create ***prediction*** function and show result in barplot. 
-```python
-def prediction(model,test_input,test_output):
-    test = encode_data(test_input)
-    model_name = model.__class__.__name__
-    prediction = model.predict(test_input)
-    print('{} model test accuracy : {}'.format(model_name,accuracy_score(test_output, prediction)))
-    return accuracy_score(test_output, prediction)
-```
-![Prediction Accuracy](https://user-images.githubusercontent.com/122997699/221407931-66962dd3-67f2-4aed-8c0c-162ad0152e89.png)
 
-Now I can choose this classifiers:
+##### In next step I Will try to predict survival passenger by  from test.csv file, and passenger defined by user.
+To this case i choose:
 * LinearDiscriminantAnalysis
+* GradientBoostingClassifier
 * LogisticRegression
-* GradientBoostingClassifie
-
-##### In next step I Will try increase accuracy of this classifiers by using GridSearch CV. 
 
 ## Next goals 🏆⌛
 * Increasing prediction accuracy as much as possible
 * Trying other prediction models 
 * Creating graphic user interface
+* Feature Rescaling
 * Increase accuracy of this classifiers by using GridSearch CV
