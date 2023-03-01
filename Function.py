@@ -5,16 +5,22 @@ import matplotlib.pyplot as plt
 from sklearn import preprocessing
 from sklearn.model_selection import cross_val_score
 from sklearn.metrics import accuracy_score
+from sklearn.preprocessing import StandardScaler
 def fillempty(data):
     data['Age'].fillna(data['Age'].mean(), inplace=True)
-    data['Cabin'].fillna('Empty', inplace=True)
     data['Embarked'].fillna('Empty', inplace=True)
     data['Fare'].fillna(0, inplace=True)
 
     return data
+def rescaling(data):
+    ages_data = np.array(data["Age"]).reshape(-1, 1)
+    fares_data = np.array(data["Fare"]).reshape(-1, 1)
+
+    data["Age"] = StandardScaler().fit_transform(ages_data)
+    data["Fare"] = StandardScaler().fit_transform(fares_data)
 
 def encode_data(data):
-    features = ['Cabin', 'Sex', 'Embarked']
+    features = ['Sex', 'Embarked']
     for feature in features:
         le = preprocessing.LabelEncoder()
         le = le.fit(data[feature])
@@ -73,12 +79,10 @@ def data_analisis(data):
     plt.show()
 
 
-def training_models(models,x_train,y_train,val_x,val_y):
-    print('\n\n Training models ')
-    for model in models:
-        model.fit(x_train,y_train)
-        model_name = model.__class__.__name__
-        print("{} model training accuracy: {}".format(model_name,model.score(val_x,val_y)))
+def training_models(model,x_train,y_train,val_x,val_y):
+    model.fit(x_train,y_train)
+    model_name = model.__class__.__name__
+    print("{} model training accuracy: {}".format(model_name,model.score(val_x,val_y)))
 
 def cross_validation(model,x_data,y_data,cv):
     scores = cross_val_score(model,x_data,y_data,cv=cv)
@@ -87,9 +91,19 @@ def cross_validation(model,x_data,y_data,cv):
         print('Validation {0} Accuracy {1}'.format(iter_count, accuracy))
     print(' Average Accuracy for {} :{} '.format(model_name, np.mean(scores)))
     return np.mean(scores)
-def prediction(model,test_input,test_output):
-    test = encode_data(test_input)
+def get_passanger(columns):
+    passanger = pd.DataFrame()
+    for column in columns:
+        passanger.at[0,column]=input(" Give me passanger {}".format(column))
+    passanger_pred=passanger
+    fillempty(passanger_pred)
+    passanger_pred.drop(['Name', 'Ticket', 'PassengerId', 'Cabin'], axis=1, inplace=True)
+    rescaling(passanger_pred)
+    encode_data(passanger_pred)
+
+    return  passanger_pred
+
+def prediction_passanger(model,test_input):
     model_name = model.__class__.__name__
     prediction = model.predict(test_input)
-    print('{} model test accuracy : {}'.format(model_name,accuracy_score(test_output, prediction)))
-    return accuracy_score(test_output, prediction)
+    print('{} model predict that passanger : {}'.format(model_name,"Survive" if prediction==1 else "Dead" ))
