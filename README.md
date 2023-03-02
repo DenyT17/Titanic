@@ -150,15 +150,54 @@ In this case, best  cross-validation average accuracy have:
 * LinearDiscriminantAnalysis
 
 
-##### In next step I Will try to predict survival passenger by  from test.csv file, and passenger defined by user.
+## Making prediction of another data.
+In next step I Will try to predict survival passenger by  from test.csv file, and passenger defined by user.
 To this case i choose:
 * LinearDiscriminantAnalysis
 * GradientBoostingClassifier
 * LogisticRegression
 
+#### Predicton survival passanger from test.csv file takes place as follows:
+```python
+LR_model = LogisticRegression(max_iter=500)
+GBC_model = GradientBoostingClassifier()
+LDA_model = LinearDiscriminantAnalysis()
+
+LR_pred = LR_model.fit(train_x,train_y).predict(test)
+GBC_pred = GBC_model.fit(train_x,train_y).predict(test)
+LDA_pred = LDA_model.fit(train_x,train_y).predict(test)
+
+test_models = ['LogisticRegression','GradientBoostingClassifier','LinearDiscriminantAnalysis']
+Prediction_accuracy=[]
+Prediction_accuracy.append(accuracy_score(LR_pred , test_output))
+Prediction_accuracy.append(accuracy_score(GBC_pred , test_output))
+Prediction_accuracy.append(accuracy_score(LDA_pred , test_output))
+
+```
+
+Accuracy of this prediction I display on bar graph.
+![Prediction Accuracy](https://user-images.githubusercontent.com/122997699/222149187-d4488a18-1418-49d3-a638-271f8224bb32.png)
+
+#### To predict the survival of a passenger with user-defined characteristics, I create ***get_passanger*** function that asks the user for further passenger characteristics and saves them.
+```python
+def get_passanger(columns):
+    passanger = pd.DataFrame()
+    for column in columns:
+        passanger.at[0,column]=input(" Give me passanger {}".format(column))
+    passanger_pred=passanger
+    fillempty(passanger_pred)
+    passanger_pred.drop(['Name', 'Ticket', 'PassengerId', 'Cabin'], axis=1, inplace=True)
+    rescaling(passanger_pred)
+    encode_data(passanger_pred)
+
+    return  passanger_pred
+```
+Result of survival prediction for example passenger:
+![image](https://user-images.githubusercontent.com/122997699/222150625-d3ce3578-60e1-4284-9aeb-289cf623cfb8.png)
+
+So in this case, the predictions are not the same.
 ## Next goals 🏆⌛
-* Increasing prediction accuracy as much as possible
-* Trying other prediction models 
+* Increasing prediction accuracy as much as possible 
 * Creating graphic user interface
 * Feature Rescaling
 * Increase accuracy of this classifiers by using GridSearch CV
