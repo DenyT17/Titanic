@@ -4,6 +4,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication, QMainWindow, QComboBox, QListWidget, QVBoxLayout, QLabel, QGridLayout,QSlider
 from PyQt5.QtWidgets import QApplication, QWidget, QLineEdit, QPushButton, QHBoxLayout
 from PyQt5 import QtGui
+from PyQt5.QtGui import QIcon
 import sys
 from Function import *
 import pandas as pd
@@ -132,6 +133,7 @@ class Titanic_app(QWidget):
         self.setLayout(layoutT)
         self.resize(300, 300)
         self.setWindowTitle("Titanic Survival Prediction")
+        self.setWindowIcon(QIcon('image.png'))
         self.show()
 
 
@@ -217,18 +219,17 @@ class Titanic_app(QWidget):
                          ['Pclass', 'Sex', 'Age', 'SibSp', 'Parch', 'Fare', 'Embarked']]
         encode_data(self.passanger)
         rescaling(self.passanger)
-        LR_pred = LR_model.predict_proba(self.passanger)
-        print(
-        "According to LogisticRegression is {0} % probability that passanger would die, and {1} % probability that passanger would survive"
-        .format( LR_pred[:, 0], LR_pred[:, 1]))
-        LDA_pred = LDA_model.predict_proba(self.passanger)
-        print(
-        "According to LinearDiscriminantAnalysis is {0} % probability that passanger would die, and {1} % probability that passanger would survive"
-        .format( LDA_pred[:, 0], LDA_pred[:, 1]))
-        GBC_pred = GBC_model.predict_proba(self.passanger)
-        print(
-        "According to GradientBoostingClassifier is {0} % probability that passanger would die, and {1} % probability that passanger would survive"
-        .format( GBC_pred[:, 0], GBC_pred[:, 1]))
+
+        LR_predict = LR_model.predict_proba(self.passanger)
+        self.LR_pred.setText("{0} % die, and {1} % survive"
+        .format(round(LR_predict.item(0)*100,2), round(LR_predict.item(1)*100,2)))
+
+        LDA_predict = LDA_model.predict_proba(self.passanger)
+        self.LDA_pred.setText("{0} % die, and {1} % survive"
+                             .format(round(LDA_predict.item(0)*100,2), round(LDA_predict.item(1)*100,2)))
+        GBC_predict = GBC_model.predict_proba(self.passanger)
+        self.GBC_pred.setText("{0} % die, and {1} % survive"
+                             .format(round(GBC_predict.item(0)*100,2), round(GBC_predict.item(1)*100,2)))
 
 
 
