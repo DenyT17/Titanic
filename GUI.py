@@ -22,7 +22,6 @@ class Titanic_app(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.initUI()
-
     def initUI(self):
         self.passanger = pd.DataFrame()
         self.Name = QLabel("Name:")
@@ -123,10 +122,10 @@ class Titanic_app(QWidget):
         layoutT.addWidget(self.pred_button,10,2)
         layoutT.addWidget(self.LR_Pred,0,4)
         layoutT.addWidget(self.LR_pred,1,4)
-        layoutT.addWidget(self.GBC_Pred,0,5)
-        layoutT.addWidget(self.GBC_pred,1,5)
-        layoutT.addWidget(self.LDA_Pred,0,6)
-        layoutT.addWidget(self.LDA_pred,1,6)
+        layoutT.addWidget(self.GBC_Pred,4,4)
+        layoutT.addWidget(self.GBC_pred,5,4)
+        layoutT.addWidget(self.LDA_Pred,8,4)
+        layoutT.addWidget(self.LDA_pred,9,4)
 
 
 
@@ -230,7 +229,6 @@ class Titanic_app(QWidget):
         GBC_predict = GBC_model.predict_proba(self.passanger)
         self.GBC_pred.setText("{0} % die, and {1} % survive"
                              .format(round(GBC_predict.item(0)*100,2), round(GBC_predict.item(1)*100,2)))
-
 
 
 import sys
