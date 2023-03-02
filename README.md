@@ -201,6 +201,7 @@ In this step, I create GUI thanks to which I can define new passenger and predic
 To this purpos I use ***PyQt5*** libraries. Whole code is in ***GUI.py*** file. 
 
 At this moments GUI windows looks like this : 
+
 ![image](https://user-images.githubusercontent.com/122997699/222525365-8167e6d2-0036-4fdb-82c7-f4deb6665ccf.png)
 
 In this case, I use passanger features from test.csv file. This passenger didn't survival, so only GradientBoostingClassifier give correct prediction. 
