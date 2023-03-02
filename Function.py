@@ -97,7 +97,7 @@ def get_passanger(columns):
         passanger.at[0,column]=input(" Give me passanger {}".format(column))
     passanger_pred=passanger
     fillempty(passanger_pred)
-    passanger_pred.drop(['Name', 'Ticket', 'PassengerId', 'Cabin'], axis=1, inplace=True)
+    passanger_pred.drop(['Name', 'Ticket', 'Cabin'], axis=1, inplace=True)
     rescaling(passanger_pred)
     encode_data(passanger_pred)
 

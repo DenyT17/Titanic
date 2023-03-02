@@ -4,11 +4,13 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from Function import *
+import joblib
 from sklearn.metrics import accuracy_score, log_loss
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.svm import SVC
 from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier, GradientBoostingClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
@@ -37,11 +39,14 @@ data_analisis(train)
 
 # Creating targets
 train_features = train.pop('Survived')
+test.drop(['PassengerId'], axis=1, inplace=True)
 columns = test.columns
+
+
 
 # Droping unnecessary columns
 train.drop(['Name', 'Ticket', 'PassengerId','Cabin','Age Range'], axis=1, inplace=True)
-test.drop(['Name', 'Ticket', 'PassengerId','Cabin'], axis=1, inplace=True)
+test.drop(['Name', 'Ticket', 'Cabin'], axis=1, inplace=True)
 
 # Encoding data
 encode_data(train)
@@ -63,7 +68,7 @@ models = [
         AdaBoostClassifier(),
         GradientBoostingClassifier(),
         LogisticRegression(max_iter=500),
-        LinearDiscriminantAnalysis()
+        LinearDiscriminantAnalysis(),
 ]
 for model in models:
         training_models(model,train_x,train_y,val_x,val_y)
@@ -85,19 +90,34 @@ plt.tight_layout()
 
 
 # Predict Test data
-LR_model = LogisticRegression(max_iter=500)
-GBC_model = GradientBoostingClassifier()
-LDA_model = LinearDiscriminantAnalysis()
+LR = LogisticRegression(max_iter=500)
+GBC = GradientBoostingClassifier()
+LDA = LinearDiscriminantAnalysis()
 
-LR_pred = LR_model.fit(train_x,train_y).predict(test)
-GBC_pred = GBC_model.fit(train_x,train_y).predict(test)
-LDA_pred = LDA_model.fit(train_x,train_y).predict(test)
+
+LR_model = LR.fit(train_x,train_y)
+GBC_model = GBC.fit(train_x,train_y)
+LDA_model = LDA.fit(train_x,train_y)
+
+#Save model
+filename = "LR_model.joblib"
+joblib.dump(LR_model, filename)
+filename = "GBC_model.joblib"
+joblib.dump(GBC_model, filename)
+filename = "LDA_model.joblib"
+joblib.dump(LDA_model, filename)
+
+LR_pred = LR_model.predict(test)
+GBC_pred = GBC_model.predict(test)
+LDA_pred = LDA_model.predict(test)
+
 
 test_models = ['LogisticRegression','GradientBoostingClassifier','LinearDiscriminantAnalysis']
 Prediction_accuracy=[]
 Prediction_accuracy.append(accuracy_score(LR_pred , test_output))
 Prediction_accuracy.append(accuracy_score(GBC_pred , test_output))
 Prediction_accuracy.append(accuracy_score(LDA_pred , test_output))
+
 
 fig = plt.figure(figsize=(10,10))
 ax = sns.barplot(x=test_models,y=Prediction_accuracy)
