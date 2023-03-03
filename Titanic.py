@@ -11,7 +11,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.svm import SVC
-from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier, GradientBoostingClassifier
+from sklearn.ensemble import BaggingClassifier, RandomForestClassifier, AdaBoostClassifier, GradientBoostingClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.model_selection import GridSearchCV
@@ -56,7 +56,7 @@ encode_data(test)
 rescaling(train)
 rescaling(test)
 
-print(train.head())
+
 # Spliting data
 train_x,val_x,train_y,val_y = train_test_split(train,train_features,test_size=.30,random_state=42)
 
@@ -139,4 +139,13 @@ LDA_pred = LDA_model.predict_proba(passanger)
 print("According to {0} is {1} % probability that passanger would die, and {2} % probability that passanger would survive".format(test_models[0],LR_pred[:,0],LR_pred[:,1]))
 print("According to {0} is {1} % probability that passanger would die, and {2} % probability that passanger would survive".format(test_models[1],GBC_pred[:,0],GBC_pred[:,1]))
 print("According to {0} is {1} % probability that passanger would die, and {2} % probability that passanger would survive".format(test_models[2],LDA_pred[:,0],LDA_pred[:,1]))
+
+LR_model = joblib.load("LR_model.joblib")
+GBC_model = joblib.load("GBC_model.joblib")
+LDA_model = joblib.load("LDA_model.joblib")
+
+gb = GradientBoostingClassifier()
+lr = LogisticRegression()
+lda = LinearDiscriminantAnalysis()
+
 
