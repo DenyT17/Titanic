@@ -202,9 +202,10 @@ To this purpos I use ***PyQt5*** libraries. Whole code is in ***GUI.py*** file.
 
 At this moments GUI windows looks like this : 
 
-![image](https://user-images.githubusercontent.com/122997699/222525365-8167e6d2-0036-4fdb-82c7-f4deb6665ccf.png)
+![image](https://user-images.githubusercontent.com/122997699/222802539-9ae80fb1-d8e0-4e9d-b4be-f705bab3e823.png)
 
-In this case, I use passanger features from test.csv file. This passenger didn't survival, so only GradientBoostingClassifier give correct prediction. 
+In this case, I use passenger features from test.csv file, but I change his name because of sentiment 😅
+All three prediction are correct, because this passenger didn't survival.
 
 
 So in this case, the predictions are not the same.
