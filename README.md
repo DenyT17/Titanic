@@ -178,22 +178,6 @@ Prediction_accuracy.append(accuracy_score(LDA_pred , test_output))
 Accuracy of this prediction I display on bar graph.
 ![Prediction Accuracy](https://user-images.githubusercontent.com/122997699/222149187-d4488a18-1418-49d3-a638-271f8224bb32.png)
 
-#### To predict the survival of a passenger with user-defined characteristics, I create ***get_passanger*** function that asks the user for further passenger characteristics and saves them.
-```python
-def get_passanger(columns):
-    passanger = pd.DataFrame()
-    for column in columns:
-        passanger.at[0,column]=input(" Give me passanger {}".format(column))
-    passanger_pred=passanger
-    fillempty(passanger_pred)
-    passanger_pred.drop(['Name', 'Ticket', 'PassengerId', 'Cabin'], axis=1, inplace=True)
-    rescaling(passanger_pred)
-    encode_data(passanger_pred)
-
-    return  passanger_pred
-```
-Result of survival prediction for example passenger:
-![image](https://user-images.githubusercontent.com/122997699/222150625-d3ce3578-60e1-4284-9aeb-289cf623cfb8.png)
 
 ## Creating graphic user interface
 
