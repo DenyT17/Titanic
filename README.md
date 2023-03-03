@@ -210,5 +210,6 @@ In this case, I use passanger features from test.csv file. This passenger didn't
 So in this case, the predictions are not the same.
 ## Next goals 🏆⌛
 * Increasing prediction accuracy as much as possible 
+* Try to use Bagging and Boosting to increasing accuracy
 * Developingg graphic user interface
 
