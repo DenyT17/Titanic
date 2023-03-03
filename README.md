@@ -195,6 +195,5 @@ API has button thanks to witch user can save passenger and three prediction to c
 
 ## Next goals 🏆⌛
 * Increasing prediction accuracy as much as possible 
-* Try to use Bagging and Boosting to increasing accuracy
 * Developingg graphic user interface
 
