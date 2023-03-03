@@ -195,9 +195,22 @@ def get_passanger(columns):
 Result of survival prediction for example passenger:
 ![image](https://user-images.githubusercontent.com/122997699/222150625-d3ce3578-60e1-4284-9aeb-289cf623cfb8.png)
 
+## Creating graphic user interface
+
+In this step, I create GUI thanks to which I can define new passenger and prediction his chance to survival thanks to three models from last point.
+To this purpos I use ***PyQt5*** libraries. Whole code is in ***GUI.py*** file. 
+
+At this moments GUI windows looks like this : 
+
+![image](https://user-images.githubusercontent.com/122997699/222802539-9ae80fb1-d8e0-4e9d-b4be-f705bab3e823.png)
+
+In this case, I use passenger features from test.csv file, but I change his name because of sentiment 😅
+All three prediction are correct, because this passenger didn't survival.
+
+
 So in this case, the predictions are not the same.
 ## Next goals 🏆⌛
 * Increasing prediction accuracy as much as possible 
-* Creating graphic user interface
-* Feature Rescaling
-* Increase accuracy of this classifiers by using GridSearch CV
+* Try to use Bagging and Boosting to increasing accuracy
+* Developingg graphic user interface
+
