@@ -209,8 +209,6 @@ All three prediction are correct, because this passenger didn't survival.
 
 API has button thanks to witch user can save passenger and three prediction to csv file.
 
-
-So in this case, the predictions are not the same.
 ## Next goals 🏆⌛
 * Increasing prediction accuracy as much as possible 
 * Try to use Bagging and Boosting to increasing accuracy
