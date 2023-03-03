@@ -11,8 +11,8 @@
 ## Description ❔❓
 ![Titanic-II-wyplynie-w-rejs-w-2022-roku -Czy-tym-razem-podroz-zakonczy-sie-szczesliwie_article](https://user-images.githubusercontent.com/122997699/221285433-66d6c0a8-2f9c-4875-ad10-cdfd10f734b5.jpg)
 
-In this project, using the sklearn library, I will create a model thanks to which I will be able to make predictions about whether a given passenger would have survived the sinking of the Titanic.
-When accuracy of prediction will be satysficed, I will want to make simple graphical user interface, thanks to which usser will be able to define features of passanger, and prediction his survival. 
+In this project, using the sklearn library, I create a model thanks to which I'm able to make predictions about whether a given passenger would have survived the sinking of the Titanic.
+Additional I create  simple graphical user interface, thanks to which usser can define features of passanger, and prediction his survival. 
 ## Dataset📁
 
 Dataset which I use in this problem you can find below [link](https://www.kaggle.com/c/titanic)
