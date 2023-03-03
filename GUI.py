@@ -36,7 +36,6 @@ class Titanic_app(QWidget):
         self.fare_value = QLabel('0')
         self.Cabin = QLabel("Cabin number ?")
         self.Embarked = QLabel("Port of Embarkation ?")
-        self.Pred = QLabel("Predict survival ")
         self.LR_Pred = QLabel("Survival prediction by LogisticRegression: ")
         self.GBC_Pred = QLabel("Survival prediction by GradientBoostingClassifier: ")
         self.LDA_Pred = QLabel("Survival prediction by LinearDiscriminantAnalysis: ")
@@ -48,11 +47,16 @@ class Titanic_app(QWidget):
         self.pred_button.resize(self.pred_button.sizeHint())
         self.pred_button.clicked.connect(self.prediction)
 
+
+        self.save_button = QPushButton('&SAVE TO CSV ')
+        self.save_button.resize(self.pred_button.sizeHint())
+        self.save_button.clicked.connect(self.save)
+
         self.name = QLineEdit()
         self.name.textChanged.connect(self.updatename)
 
         self.sex = QComboBox()
-        self.sex.addItems(['','Male','Female'])
+        self.sex.addItems(['','male','female'])
         self.sex.currentTextChanged.connect(self.sex_change)
 
         self.pclass = QComboBox()
@@ -119,7 +123,8 @@ class Titanic_app(QWidget):
         layoutT.addWidget(self.cabin,7, 2)
         layoutT.addWidget(self.Embarked,8, 2)
         layoutT.addWidget(self.embarked,9, 2)
-        layoutT.addWidget(self.pred_button,10,2)
+        layoutT.addWidget(self.pred_button,10,0)
+        layoutT.addWidget(self.save_button,10,2)
         layoutT.addWidget(self.LR_Pred,0,4)
         layoutT.addWidget(self.LR_pred,1,4)
         layoutT.addWidget(self.GBC_Pred,4,4)
@@ -130,7 +135,7 @@ class Titanic_app(QWidget):
 
 
         self.setLayout(layoutT)
-        self.resize(300, 300)
+        self.resize(900, 300)
         self.setWindowTitle("Titanic Survival Prediction")
         self.setWindowIcon(QIcon('image.png'))
         self.show()
@@ -142,94 +147,122 @@ class Titanic_app(QWidget):
                                       "{"
                                       "background-color: lightgreen;"
                                       "}")
-        self.passanger.at[0,'Age'] = value
     def updatefare(self, value):
         self.fare_value.setText(str(value))
         self.fare_value.setStyleSheet("QLabel"
                                "{"
                                "background-color: lightgreen;"
                                "}")
-        self.passanger.at[0, 'Fare'] = value
     def updatename(self,value):
         self.name.setStyleSheet("QLineEdit"
                                       "{"
                                       "background-color: lightgreen;"
                                       "}")
-        self.passanger.at[0, 'Name'] = value
-
     def updateticket(self,value):
         self.ticket.setStyleSheet("QLineEdit"
                                       "{"
                                       "background-color: lightgreen;"
                                       "}")
-        self.passanger.at[0, 'Ticket'] = value
-
     def sex_change(self,value):
         self.sex.setStyleSheet("QComboBox"
                                      "{"
                                      "background-color: lightgreen;"
                                      "}")
-        self.passanger.at[0, 'Sex'] = value
     def pclass_change(self,value):
         self.pclass.setStyleSheet("QComboBox"
                                      "{"
                                      "background-color: lightgreen;"
                                      "}")
-        if value == 'First':
-            self.passanger.at[0, 'Pclass'] = 1
-        elif value == 'Second':
-            self.passanger.at[0, 'Pclass'] = 2
-        else:
-            self.passanger.at[0, 'Pclass'] = 3
     def sibsp_change(self,value):
         self.sibsp.setStyleSheet("QComboBox"
                                      "{"
                                      "background-color: lightgreen;"
                                      "}")
-        self.passanger.at[0, 'SibSp'] = value
     def parch_change(self,value):
         self.parch.setStyleSheet("QComboBox"
                                      "{"
                                      "background-color: lightgreen;"
                                      "}")
-        self.passanger.at[0, 'Parch'] = value
     def embarked_change(self,value):
         self.embarked.setStyleSheet("QComboBox"
                                      "{"
                                      "background-color: lightgreen;"
                                      "}")
-        if value == 'Southampton':
-            self.passanger.at[0, 'Embarked'] = "S"
-        elif value == 'Queenstown':
-            self.passanger.at[0, 'Embarked'] = "Q"
-        else:
-            self.passanger.at[0, 'Embarked'] = "C"
     def cabin_change(self,value):
         self.cabin.setStyleSheet("QComboBox"
                                      "{"
                                      "background-color: lightgreen;"
                                      "}")
-        self.passanger.at[0, 'Cabin'] = value
-
     def prediction(self):
-        if 'Name' in self.passanger.columns:
-            self.passanger.drop(['Name', 'Ticket', 'Cabin'], axis=1, inplace=True)
+        self.passanger = self.get_passanger()
+        self.passanger_data = self.passanger.iloc[:1]
+        self.passanger.drop(['Name', 'Ticket', 'Cabin'], axis=1, inplace=True)
         self.passanger = self.passanger.loc[:,
                          ['Pclass', 'Sex', 'Age', 'SibSp', 'Parch', 'Fare', 'Embarked']]
         encode_data(self.passanger)
         rescaling(self.passanger)
-
-        LR_predict = LR_model.predict_proba(self.passanger)
+        self.passanger = self.passanger.iloc[:1]
+        self.LR_proba = LR_model.predict_proba(self.passanger)
         self.LR_pred.setText("{0} % die, and {1} % survive"
-        .format(round(LR_predict.item(0)*100,2), round(LR_predict.item(1)*100,2)))
+                            .format(round(self.LR_proba.item(0)*100,2), round(self.LR_proba.item(1)*100,2)))
 
-        LDA_predict = LDA_model.predict_proba(self.passanger)
+        self.LDA_proba = LDA_model.predict_proba(self.passanger)
         self.LDA_pred.setText("{0} % die, and {1} % survive"
-                             .format(round(LDA_predict.item(0)*100,2), round(LDA_predict.item(1)*100,2)))
-        GBC_predict = GBC_model.predict_proba(self.passanger)
-        self.GBC_pred.setText("{0} % die, and {1} % survive"
-                             .format(round(GBC_predict.item(0)*100,2), round(GBC_predict.item(1)*100,2)))
+                             .format(round(self.LDA_proba.item(0)*100,2), round(self.LDA_proba.item(1)*100,2)))
+        self.GBC_proba = GBC_model.predict_proba(self.passanger)
 
+        self.GBC_pred.setText("{0} % die, and {1} % survive"
+                             .format(round(self.GBC_proba.item(0)*100,2), round(self.GBC_proba.item(1)*100,2)))
+
+    def save(self):
+        if self.LR_proba.item(0) < self.LR_proba.item(1):
+            self.passanger_data.loc[1,'LR'] = 'Survival'
+        else:
+            self.passanger_data.loc[1, 'LR'] = 'Dead'
+        if self.LDA_proba.item(0) < self.LDA_proba.item(1):
+            self.passanger_data.loc[1, 'LDA'] = 'Survival'
+        else:
+            self.passanger_data.loc[1, 'LDA'] = 'Dead'
+        if self.GBC_proba.item(0) < self.GBC_proba.item(1):
+            self.passanger_data.loc[1, 'GBC'] = 'Survival'
+        else:
+            self.passanger_data.loc[1, 'GBC'] = 'Dead'
+        self.passanger_data = self.passanger_data.loc[:,
+                             ['Name','Age','Sex','Pclass','SibSp', 'Parch', 'Fare', 'Embarked','LR','LDA','GBC']]
+        self.passanger_data.to_csv('Titanic Prediction')
+    def get_passanger(self):
+        data.at[1, 'Name'] = self.name.text()
+        data.at[1, 'Sex'] = self.sex.currentText()
+        data.at[1, 'Age'] = self.age.value()
+        data.at[1, 'Fare'] = self.fare.value()
+        data.at[1, 'Ticket'] = self.ticket.text()
+        pclass = self.pclass.currentText()
+        if pclass == 'First':
+            data.at[1, 'Pclass'] = 1
+        elif pclass == 'Second':
+            data.at[1, 'Pclass'] = 2
+        else:
+            data.at[1, 'Pclass'] = 3
+
+        sibsp = self.sibsp.currentText()
+        if sibsp == 'No':
+            data.at[1, 'SibSp'] = 0
+        else:
+            data.at[1, 'SibSp'] = 1
+        parch = self.sibsp.currentText()
+        if parch == 'No':
+            data.at[1, 'Parch'] = 0
+        else:
+            data.at[1, 'Parch'] = 1
+        embarked = self.embarked.currentText()
+        if embarked == 'Southampton':
+            data.at[1, 'Embarked'] = "S"
+        elif embarked == 'Queenstown':
+            data.at[1, 'Embarked'] = "Q"
+        else:
+            data.at[1, 'Embarked'] = "C"
+        data.at[1, 'Cabin'] = self.cabin.currentText()
+        return data
 
 import sys
 app = QApplication(sys.argv)
