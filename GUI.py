@@ -2,7 +2,7 @@
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication, QMainWindow, QComboBox, QListWidget, QVBoxLayout, QLabel, QGridLayout,QSlider
-from PyQt5.QtWidgets import QApplication, QWidget, QLineEdit, QPushButton, QHBoxLayout
+from PyQt5.QtWidgets import QTextEdit, QApplication, QWidget, QLineEdit, QPushButton, QHBoxLayout
 from PyQt5 import QtGui
 from PyQt5.QtGui import QIcon
 import sys
@@ -36,9 +36,11 @@ class Titanic_app(QWidget):
         self.fare_value = QLabel('0')
         self.Cabin = QLabel("Cabin number ?")
         self.Embarked = QLabel("Port of Embarkation ?")
-        self.LR_Pred = QLabel("Survival prediction by LogisticRegression: ")
-        self.GBC_Pred = QLabel("Survival prediction by GradientBoostingClassifier: ")
-        self.LDA_Pred = QLabel("Survival prediction by LinearDiscriminantAnalysis: ")
+        self.LR_Pred = QLabel("Survival probability by LogisticRegression: ")
+        self.GBC_Pred = QLabel("Survival probability by GradientBoostingClassifier: ")
+        self.LDA_Pred = QLabel("Survival probability by LinearDiscriminantAnalysis: ")
+        self.Summary = QLabel("Summary information: ")
+
 
 
 
@@ -100,6 +102,10 @@ class Titanic_app(QWidget):
         self.GBC_pred.setReadOnly(True)
         self.LDA_pred.setReadOnly(True)
 
+        self.summary = QTextEdit()
+        self.summary.setReadOnly(True)
+
+
         layoutT = QGridLayout()
         layoutT.addWidget(self.Name, 0, 0)
         layoutT.addWidget(self.name, 1, 0)
@@ -123,14 +129,16 @@ class Titanic_app(QWidget):
         layoutT.addWidget(self.cabin,7, 2)
         layoutT.addWidget(self.Embarked,8, 2)
         layoutT.addWidget(self.embarked,9, 2)
-        layoutT.addWidget(self.pred_button,10,0)
-        layoutT.addWidget(self.save_button,10,2)
+        layoutT.addWidget(self.pred_button,10,0,1,3)
+        layoutT.addWidget(self.save_button,10,4)
         layoutT.addWidget(self.LR_Pred,0,4)
         layoutT.addWidget(self.LR_pred,1,4)
         layoutT.addWidget(self.GBC_Pred,4,4)
         layoutT.addWidget(self.GBC_pred,5,4)
         layoutT.addWidget(self.LDA_Pred,8,4)
         layoutT.addWidget(self.LDA_pred,9,4)
+        layoutT.addWidget(self.Summary,0,5)
+        layoutT.addWidget(self.summary,1,5,9,2)
 
 
 
@@ -229,7 +237,7 @@ class Titanic_app(QWidget):
             self.passanger_data.loc[1, 'GBC'] = 'Dead'
         self.passanger_data = self.passanger_data.loc[:,
                              ['Name','Age','Sex','Pclass','SibSp', 'Parch', 'Fare', 'Embarked','LR','LDA','GBC']]
-        self.passanger_data.to_csv('Titanic Prediction')
+        self.passanger_data.to_csv('Titanic Prediction',mode='a', index=False, header=False)
     def get_passanger(self):
         data.at[1, 'Name'] = self.name.text()
         data.at[1, 'Sex'] = self.sex.currentText()

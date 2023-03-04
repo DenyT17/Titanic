@@ -91,17 +91,7 @@ def cross_validation(model,x_data,y_data,cv):
         print('Validation {0} Accuracy {1}'.format(iter_count, accuracy))
     print(' Average Accuracy for {} :{} '.format(model_name, np.mean(scores)))
     return np.mean(scores)
-def get_passanger(columns):
-    passanger = pd.DataFrame()
-    for column in columns:
-        passanger.at[0,column]=input(" Give me passanger {}".format(column))
-    passanger_pred=passanger
-    fillempty(passanger_pred)
-    passanger_pred.drop(['Name', 'Ticket', 'Cabin'], axis=1, inplace=True)
-    rescaling(passanger_pred)
-    encode_data(passanger_pred)
 
-    return  passanger_pred
 
 def prediction_passanger(model,test_input):
     model_name = model.__class__.__name__
