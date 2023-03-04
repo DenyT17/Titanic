@@ -221,8 +221,6 @@ class Titanic_app(QWidget):
 
         self.GBC_pred.setText("{0} % die, and {1} % survive"
                              .format(round(self.GBC_proba.item(0)*100,2), round(self.GBC_proba.item(1)*100,2)))
-
-    def save(self):
         if self.LR_proba.item(0) < self.LR_proba.item(1):
             self.passanger_data.loc[1,'LR'] = 'Survival'
         else:
@@ -237,6 +235,19 @@ class Titanic_app(QWidget):
             self.passanger_data.loc[1, 'GBC'] = 'Dead'
         self.passanger_data = self.passanger_data.loc[:,
                              ['Name','Age','Sex','Pclass','SibSp', 'Parch', 'Fare', 'Embarked','LR','LDA','GBC']]
+        self.summary.setPlainText(f"Name:  {self.passanger_data.iloc[0,0]}\n"
+                                  f"Age: {self.passanger_data.iloc[0,1]}\n"
+                                  f"Sex: {self.passanger_data.iloc[0,2]}\n"
+                                  f"Passanger Class: {self.passanger_data.iloc[0,3]}\n"
+                                  f"Siblings or spouses aboard the Titanic: {self.passanger_data.iloc[0,4]}\n"
+                                  f"Children's aboard the : {self.passanger_data.iloc[0,5]}\n"
+                                  f"Passenger fare : {self.passanger_data.iloc[0,6]}\n"
+                                  f"Embarked : {self.passanger_data.iloc[0,7]}\n"
+                                  f"Predict by LogisticRegression: {self.passanger_data.iloc[0,8]}\n"
+                                  f"Embarked GradientBoostingClassifier: {self.passanger_data.iloc[0,9]}\n"
+                                  f"Embarked LinearDiscriminantAnalysis: {self.passanger_data.iloc[0,10]}\n")
+
+    def save(self):
         self.passanger_data.to_csv('Titanic Prediction',mode='a', index=False, header=False)
     def get_passanger(self):
         data.at[1, 'Name'] = self.name.text()
