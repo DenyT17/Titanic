@@ -186,7 +186,7 @@ To this purpos I use ***PyQt5*** libraries. Whole code is in ***GUI.py*** file.
 
 At this moments GUI windows looks like this : 
 
-![image](https://user-images.githubusercontent.com/122997699/222891308-ffb04119-5153-4c95-9712-e31ac4186392.png)
+![image](https://user-images.githubusercontent.com/122997699/222891330-55b9daeb-d22b-4234-90c6-949bea47871e.png)
 
 In this case, I use passenger features from test.csv file, but I change his name because of sentiment 😅
 All three prediction are correct, because this passenger didn't survival.
