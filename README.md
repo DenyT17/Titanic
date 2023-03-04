@@ -11,8 +11,8 @@
 ## Description ❔❓
 ![Titanic-II-wyplynie-w-rejs-w-2022-roku -Czy-tym-razem-podroz-zakonczy-sie-szczesliwie_article](https://user-images.githubusercontent.com/122997699/221285433-66d6c0a8-2f9c-4875-ad10-cdfd10f734b5.jpg)
 
-In this project, using the sklearn library, I will create a model thanks to which I will be able to make predictions about whether a given passenger would have survived the sinking of the Titanic.
-When accuracy of prediction will be satysficed, I will want to make simple graphical user interface, thanks to which usser will be able to define features of passanger, and prediction his survival. 
+In this project, using the sklearn library, I create a model thanks to which I'm able to make predictions about whether a given passenger would have survived the sinking of the Titanic.
+Additional I create  simple graphical user interface, thanks to which usser can define features of passanger, and prediction his survival. 
 ## Dataset📁
 
 Dataset which I use in this problem you can find below [link](https://www.kaggle.com/c/titanic)
@@ -178,22 +178,6 @@ Prediction_accuracy.append(accuracy_score(LDA_pred , test_output))
 Accuracy of this prediction I display on bar graph.
 ![Prediction Accuracy](https://user-images.githubusercontent.com/122997699/222149187-d4488a18-1418-49d3-a638-271f8224bb32.png)
 
-#### To predict the survival of a passenger with user-defined characteristics, I create ***get_passanger*** function that asks the user for further passenger characteristics and saves them.
-```python
-def get_passanger(columns):
-    passanger = pd.DataFrame()
-    for column in columns:
-        passanger.at[0,column]=input(" Give me passanger {}".format(column))
-    passanger_pred=passanger
-    fillempty(passanger_pred)
-    passanger_pred.drop(['Name', 'Ticket', 'PassengerId', 'Cabin'], axis=1, inplace=True)
-    rescaling(passanger_pred)
-    encode_data(passanger_pred)
-
-    return  passanger_pred
-```
-Result of survival prediction for example passenger:
-![image](https://user-images.githubusercontent.com/122997699/222150625-d3ce3578-60e1-4284-9aeb-289cf623cfb8.png)
 
 ## Creating graphic user interface
 
@@ -207,10 +191,9 @@ At this moments GUI windows looks like this :
 In this case, I use passenger features from test.csv file, but I change his name because of sentiment 😅
 All three prediction are correct, because this passenger didn't survival.
 
+API has button thanks to witch user can save passenger and three prediction to csv file.
 
-So in this case, the predictions are not the same.
 ## Next goals 🏆⌛
 * Increasing prediction accuracy as much as possible 
-* Try to use Bagging and Boosting to increasing accuracy
 * Developingg graphic user interface
 
