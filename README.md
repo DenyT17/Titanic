@@ -13,9 +13,13 @@
 
 In this project, using the sklearn library, I create a model thanks to which I'm able to make predictions about whether a given passenger would have survived the sinking of the Titanic.
 Additional I create  simple graphical user interface, thanks to which usser can define features of passanger, and prediction his survival. 
+
 ## Dataset📁
 
 Dataset which I use in this problem you can find below [link](https://www.kaggle.com/c/titanic)
+
+# The final result ✅
+![2023-03-05 11-04-24](https://user-images.githubusercontent.com/122997699/222954341-631b6e72-dd7e-45b2-a24d-1b1234b7116c.gif)
 
 ## Project implementation description 🔍
 
