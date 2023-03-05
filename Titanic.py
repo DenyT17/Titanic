@@ -128,12 +128,5 @@ plt.tight_layout()
 plt.show()
 
 
-LR_model = joblib.load("LR_model.joblib")
-GBC_model = joblib.load("GBC_model.joblib")
-LDA_model = joblib.load("LDA_model.joblib")
-
-gb = GradientBoostingClassifier()
-lr = LogisticRegression()
-lda = LinearDiscriminantAnalysis()
 
 
