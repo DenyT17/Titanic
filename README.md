@@ -197,7 +197,4 @@ All three prediction are correct, because this passenger didn't survival.
 
 API has button thanks to witch user can save passenger and three prediction to csv file.
 
-## Next goals 🏆⌛
-* Increasing prediction accuracy as much as possible 
-* Developingg graphic user interface
 
