@@ -27,6 +27,7 @@ Dataset which I use in this problem you can find below [link](https://www.kaggle
 
 * Titanic.py - main file, in which functions are use with appropriate datasets and parameters
 * Function.py - file in which all the necessary functions are defined 
+* GUI.py - file contain part of the project responsible for the GUI and finally prediction
 
 ### Loading, analisis and preprocesing dataset
 In this part I load training and test data from csv files. Now i can look at training data and take some info about it.
